@@ -7,8 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/11sD-6Ng_h7lMOY-uO77E48hH4hkjO32S
 """
 
-!pip install catboost
-!pip install category_encoders
+# !pip install catboost
+# !pip install category_encoders
 from xgboost import XGBClassifier
 from catboost import CatBoostClassifier
 from category_encoders import *

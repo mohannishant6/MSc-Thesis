@@ -7,12 +7,10 @@ Original file is located at
     https://colab.research.google.com/drive/1uxNWm-OZaXLNIVP7eMtYEorcAQBJDvJZ
 """
 
-!pip install catboost
-!pip install category_encoders
 from xgboost import XGBClassifier
 from catboost import CatBoostClassifier
 from category_encoders import *
-from sklearn.preprocessing import OrdinalEncoder
+from sklearn.preprocessing import OrdinalEncoder, LabelEncoder
 from sklearn.metrics import accuracy_score, f1_score,jaccard_score,multilabel_confusion_matrix
 import lightgbm as lgbm
 from sklearn.ensemble import RandomForestClassifier
@@ -80,10 +78,12 @@ for col in X.columns:
 model_lgbm = lgbm.LGBMClassifier(boosting_type='goss',objective='multiclass')
 parameters = {'depth'         : [6,8,10,12,14,16],
               'learning_rate' : [.01,.05,0.1,.2],
-              'iterations'    : [100, 500,1000,2000,3000]
+              'iterations'    : [100, 500,1000]
               }
 grid = GridSearchCV(estimator=model_lgbm, param_grid = parameters)
 grid.fit(X_train, y_train,categorical_feature=['Description','Belts','Property Damage','Fatal','Commercial License','HAZMAT','Commercial Vehicle','Alcohol','Work Zone','Race','Gender','Arrest Type'])    
+
+print("LGBM")
 
 # Results from Grid Search
 print("\n========================================================")
@@ -109,9 +109,9 @@ print("macro jaccard: ",jaccard_score(y_train,c.predict(X_train), average='macro
 print("micro jaccard: ",jaccard_score(y_train, c.predict(X_train), average='micro'))
 
 print("test")
-print("macro f1: ",f1_score(y_train,c.predict(X_train), average='macro'))
-print("micro f1: ",f1_score(y_train, c.predict(X_train), average='micro'))
-print("macro jaccard: ",jaccard_score(y_train,c.predict(X_train), average='macro'))
-print("micro jaccard: ",jaccard_score(y_train, c.predict(X_train), average='micro'))
+print("macro f1: ",f1_score(y_test,c.predict(X_test), average='macro'))
+print("micro f1: ",f1_score(y_test,c.predict(X_test), average='micro'))
+print("macro jaccard: ",jaccard_score(y_test,c.predict(X_test), average='macro'))
+print("micro jaccard: ",jaccard_score(y_test,c.predict(X_test), average='micro'))
 
 print(multilabel_confusion_matrix(y_test, c.predict(X_test)))
