@@ -21,7 +21,7 @@ import numpy as np
 # In[2]:
 
 
-df=pd.read_csv('../data/adult/adult.data',header=None)
+df=pd.read_csv('/users/pgrad/mohanni/demo/thesis/data/adult.data',header=None)
 df.head(3)
 
 
